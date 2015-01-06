@@ -1,0 +1,35 @@
+2015-01-06 preview 6
+update:
+UI:SplitActionBar Support.
+fix:
+BUG:Try to fix the Bug about LD_PRELOAD again.
+
+2015-01-05 preview 5
+update:
+1.UI:MultiWindow Support.
+2.change the MainActivity's launchMode from singleTask to singleTop
+fix:
+BUG:about LD_PRELOAD
+
+------------------------------------
+2015-01-04 preview 4
+update:
+UI:ActionBar Support.😜
+
+------------------------------------
+2015-01-03 preview 3
+add:
+1.UI:Terminal Emulator👍
+2.FUNC:run vm😉💪
+fix:
+1.BUG:Crash in English language locale.😓😁
+
+------------------------------------
+2015-01-02 preview 2
+add:
+1.UI:installer wizard
+2.FUNC:framework installer, rootfs installer
+
+------------------------------------
+2014-12-27 init version😜
+1.Basic user interface:MainActivity, SettingsActivity.

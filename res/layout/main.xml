@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:padding="10dp"
+	android:gravity="top|center">
+
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:gravity="bottom|center">
+
+		<ImageButton
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			style="?android:attr/buttonBarButtonStyle"
+			android:src="@drawable/run_it"
+			android:layout_weight="1.0"
+			android:onClick="onRunItPress"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Text"
+			android:layout_width="wrap_content"
+			android:id="@+id/mainTextState"
+			android:typeface="monospace"
+			android:shadowRadius="5"
+			android:shadowColor="#000000"/>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			style="?android:attr/buttonBarStyle"
+			android:layout_width="match_parent"
+			android:orientation="horizontal">
+
+			<Button
+				android:layout_height="wrap_content"
+				style="?android:attr/buttonBarButtonStyle"
+				android:text="@string/open_wizard"
+				android:layout_width="wrap_content"
+				android:layout_weight="1.0"
+				android:onClick="onWizardPress"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				style="?android:attr/buttonBarButtonStyle"
+				android:text="@string/install_package"
+				android:layout_width="wrap_content"
+				android:layout_weight="1.0"
+				android:onClick="onUpdateModulesPress"/>
+
+		</LinearLayout>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="@string/exit"
+			android:layout_width="match_parent"
+			android:onClick="onExitPress"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

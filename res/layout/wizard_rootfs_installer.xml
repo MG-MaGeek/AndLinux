@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="@string/rootfs_installer_info"
+		android:layout_width="wrap_content"/>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal">
+
+		<EditText
+			android:layout_height="match_parent"
+			android:ems="10"
+			android:layout_width="wrap_content"
+			android:layout_weight="1.0"
+			android:id="@+id/wizardrootfsinstallerPathEdit"
+			android:text="/sdcard/andlinux.tar.gz"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			style="?android:attr/buttonStyleSmall"
+			android:text="@string/select_file"
+			android:layout_width="wrap_content"
+			android:id="@+id/wizardrootfsinstallerSelectFileButton"/>
+
+	</LinearLayout>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="@string/install"
+		android:layout_width="match_parent"
+		android:id="@+id/wizardrootfsinstallerInstallButton"/>
+
+</LinearLayout>
+
