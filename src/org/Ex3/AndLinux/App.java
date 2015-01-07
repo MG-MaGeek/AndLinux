@@ -25,6 +25,21 @@ public class App extends Application
 	public void uncaughtException(Thread p1, Throwable p2)
 	{
 		Log.e("UNCAUGHT", "ERROR:", p2);
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+		{
+			File logfile = new File("/sdcard/ALICrash.log");
+			try
+			{
+				if (!logfile.exists()) logfile.createNewFile();
+				RandomAccessFile raf = new RandomAccessFile(logfile, "rw");
+				raf.seek(raf.length());
+				raf.write(p2.getLocalizedMessage().getBytes());
+				raf.close();
+			}
+			catch (IOException e)
+			{}
+
+		}
 		System.exit(0);
 	}
 	

@@ -35,7 +35,7 @@ public class TerminalActivity extends Activity
 		fragment = new TerminalFragment(mSessionManager.get(pos));
 		fm = getFragmentManager();
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		//getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		getActionBar().setListNavigationCallbacks (mSessionManager, this);

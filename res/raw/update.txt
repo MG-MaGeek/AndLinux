@@ -1,9 +1,15 @@
+2015-01-07 preview 7
+updated to github<AndLinux.github.com>😜
+change license to GPL v3😄
+
+------------------------------------
 2015-01-06 preview 6
 update:
 UI:SplitActionBar Support.
 fix:
 BUG:Try to fix the Bug about LD_PRELOAD again.
 
+------------------------------------
 2015-01-05 preview 5
 update:
 1.UI:MultiWindow Support.

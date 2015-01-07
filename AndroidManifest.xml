@@ -3,30 +3,36 @@
     package="org.Ex3.AndLinux"
 	android:sharedUserId="org.Ex3.Process"
 	android:sharedUserLabel="@string/processlabel"
-	android:versionName="preview 6"
-	android:versionCode="6"
+	android:versionName="preview 7"
+	android:versionCode="7"
 	android:installLocation="internalOnly">
 	
 	<uses-sdk android:minSdkVersion="14"
 		android:targetSdkVersion="19"/>
 	
+	<permission
+		android:name="org.Ex3.AndLinux.permission.module"
+		android:label="@string/permission_module_label"
+		android:description="@string/permission_module_description"/>
+	
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/> 
-	
+	<uses-permission android:name="org.Ex3.AndLinux.permission.module"/>
+		
     <application
 		android:name=".App"
         android:allowBackup="true"
         android:logo="@drawable/andlinux_solid"
 		android:icon="@drawable/andlinux_logo"
         android:label="@string/app_name"
+		android:hardwareAccelerated="true"
         android:theme="@style/AppTheme" >
 		
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-			android:launchMode="singleTop"
-			android:exported="true"
-			android:hardwareAccelerated="true">
+			android:launchMode="singleInstance"
+			android:exported="true">
 			
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,24 +44,22 @@
 		<activity
 			android:name=".SettingsActivity"
 			android:label="@string/settings"
-			android:launchMode="singleTask"
-			android:hardwareAccelerated="true" />
+			android:launchMode="singleInstance"/>
 		
 		<activity
 			android:name=".WizardActivity"
 			android:label="@string/wizard"
-			android:launchMode="singleTask"
-			android:hardwareAccelerated="true"
+			android:launchMode="singleInstance"
 			android:configChanges="orientation|keyboard|keyboardHidden|screenSize"/>
 		
 		<activity
 			android:name=".TerminalActivity"
 			android:label="@string/terminal_activity"
-			android:launchMode="singleTask"
+			android:launchMode="singleInstance"
 			android:uiOptions="splitActionBarWhenNarrow"
-			android:hardwareAccelerated="true"
 			android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-			android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
+			android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
+			android:noHistory="true"/>
 		
     </application>
 

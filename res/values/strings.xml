@@ -16,12 +16,14 @@
 -->
 <resources>
 	<string name="processlabel">Ex3 Process</string>
+	<string name="permission_module_label">AndLinux Module Permission</string>
+	<string name="permission_module_description">AndLinux Module\&apos;s permission.</string>
 
     <string name="app_name">AndLinux Installer</string>
 	<string name="installer">Installer</string>
 	<string name="info">&lt;img src="icon" /&gt;(AndLinux)is a mini GNU/Linux Environment for abnormal Linux User.&lt;br /&gt;
 		The &lt;b&gt;ROOT&lt;/b&gt; Permission is not in need in the android version of the application.&lt;br /&gt;
-		&lt;p&gt;Copyright © 2014-2015, MG.MaGeek&lt;small&gt;&amp;lt;MG.MaGeek@Gmail.com&amp;gt;&lt;/small&gt;.&lt;br /&gt;The software is licensed under CC BY-NC-ND 4.0 Int&amp;apos;l license.&lt;/p&gt;
+		&lt;p&gt;Copyright © 2014-2015, MG.MaGeek&lt;small&gt;&amp;lt;MG.MaGeek@Gmail.com&amp;gt;&lt;/small&gt;.&lt;br /&gt;The software is licensed under GPLv3 license.&lt;/p&gt;
 		The Frameworks is licensed under CC BY-NC-SA 4.0 Int&amp;apos;l license.The Module Packages use their own License.</string>
 	<string name="exit">Quit</string>
 	<string name="open_wizard">Start Wizard</string>
