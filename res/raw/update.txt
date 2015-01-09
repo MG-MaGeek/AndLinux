@@ -1,3 +1,10 @@
+2015-01-09 preview 8
+fix:
+BUG:crash when hiding terminal.(rebuilt the TermActivity)
+add:
+Service: AndLinuxService
+
+------------------------------------
 2015-01-07 preview 7
 updated to github<AndLinux.github.com>😜
 change license to GPL v3😄

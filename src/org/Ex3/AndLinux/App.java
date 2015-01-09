@@ -19,7 +19,7 @@ public class App extends Application
 	private SharedPreferences pref;
 	private ProgressDialog pdialog;
 	private SessionManager sessionManager;
-	public int termstate = 0;
+	public AndLinuxSevice als;
 	
 	@Override
 	public void uncaughtException(Thread p1, Throwable p2)
@@ -33,7 +33,7 @@ public class App extends Application
 				if (!logfile.exists()) logfile.createNewFile();
 				RandomAccessFile raf = new RandomAccessFile(logfile, "rw");
 				raf.seek(raf.length());
-				raf.write(p2.getLocalizedMessage().getBytes());
+				raf.write(p2.getMessage().getBytes());
 				raf.close();
 			}
 			catch (IOException e)

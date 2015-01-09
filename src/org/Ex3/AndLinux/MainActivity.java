@@ -28,7 +28,7 @@ public class MainActivity extends Activity
 				@Override
 				public Drawable getDrawable(String p1)
 				{
-					Drawable d = getResources().getDrawable(R.drawable.andlinux_solid);
+					Drawable d = getResources().getDrawable(R.drawable.andlinux_logo);
 					d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
 					return d;
 				}
@@ -38,7 +38,7 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		View view = getLayoutInflater().inflate(R.layout.updatelog, null);
+		//View view = getLayoutInflater().inflate(R.layout.updatelog, null);
 		InputStream in = getResources().openRawResource(R.raw.update);
 		String str = "";
 		try
@@ -51,17 +51,16 @@ public class MainActivity extends Activity
 		{
 			ioexcep.printStackTrace();
 		}
-		((TextView)view.findViewById(R.id.updatelogTextView)).setText(str);
 		final AlertDialog updatelog = new AlertDialog.Builder(this)
 			.setTitle(R.string.update_log)
-			.setView(view)
-			.setIcon(R.drawable.andlinux_solid)
+			.setMessage(str)
+			.setIcon(R.drawable.andlinux_logo)
 			.setPositiveButton(R.string.close, null)
 			.create();
 		final AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this)
 			.setTitle(R.string.about)
 			.setMessage(text)
-			.setIcon(R.drawable.andlinux_solid)
+			.setIcon(R.drawable.andlinux_logo)
 			.setPositiveButton(R.string.close, null)
 			.setNeutralButton(R.string.update_log, new DialogInterface.OnClickListener()
 			{
@@ -131,10 +130,5 @@ public class MainActivity extends Activity
 	protected void onStart()
 	{
 		super.onStart();
-		if (App.get().termstate == 1)
-		{
-			App.get().termstate = 0;
-			onRunItPress(null);
-		}
 	}
 }

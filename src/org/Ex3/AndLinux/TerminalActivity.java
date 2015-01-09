@@ -10,54 +10,47 @@ import android.view.*;
 import android.view.inputmethod.*;
 import android.content.*;
 import android.app.ActionBar.*;
+import jackpal.androidterm.*;
+import jackpal.androidterm.util.*;
+import org.Ex3.AndLinux.utils.SessionManager.*;
 
 public class TerminalActivity extends Activity
-	implements TermSession.FinishCallback, ActionBar.OnNavigationListener, Runnable
+	implements SessionManager.Callback, ActionBar.OnNavigationListener
 {
-	private TerminalFragment fragment;
-	private int pos;
-	private FragmentManager fm;
-	private SessionManager mSessionManager = App.get().getSessionManager();
-	private EmulatorView ev;
+	private SessionManager sm = App.get().getSessionManager();
+	//private FrameLayout container;
+	private TermView tv;
+	private DisplayMetrics dm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		Log.d("TermActivity", "onCreate");
 		setContentView(R.layout.term);
-		if (mSessionManager.getCount() == 0)
-		{
-			pos = mSessionManager.create();
-		}
-		else pos = mSessionManager.getCurrentPos();
-		mSessionManager.setCb(this);
+		dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		
-		fragment = new TerminalFragment(mSessionManager.get(pos));
-		fm = getFragmentManager();
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		getActionBar().setListNavigationCallbacks (mSessionManager, this);
-		getActionBar().setSelectedNavigationItem(pos);
-		try
-		{
-			runOnUiThread(this);
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace();
-			System.exit(2);
-		}
+		getActionBar().setListNavigationCallbacks (sm, this);
+		getActionBar().setSelectedNavigationItem(sm.getCurrentPos());
+		Intent service = new Intent(this, AndLinuxSevice.class);
+		startService(service);
 	}
 	
-	@Override
-	public void run()
+	public void createTerm(TermSession session)
 	{
-		fm.beginTransaction()
-			.replace(R.id.termFrame, fragment)
-			.commit();
-		ev = fragment.getEmulatorView();
+		Log.d("TermActivity", "createTerm");
+		tv = new TermView(this, session, dm);
+		tv.setControlKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
+		tv.setFnKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
+		tv.updatePrefs(new TermSettings(getResources(), App.get().getPref()));
+		setContentView(tv, new ViewGroup.LayoutParams(-1, -1));
+		//container.removeAllViews();
+		//container.addView(tv, -1, -1);
 	}
 	
 	@Override
@@ -81,11 +74,7 @@ public class TerminalActivity extends Activity
 				@Override
 				public boolean onMenuItemClick(MenuItem p1)
 				{
-					int pos = mSessionManager.create();
-					getActionBar().setSelectedNavigationItem(pos);
-					mSessionManager.setCurrentPos(pos);
-					fragment = new TerminalFragment(mSessionManager.get(pos));
-					runOnUiThread(TerminalActivity.this);
+					sm.create();
 					return true;
 				}
 			});
@@ -96,19 +85,18 @@ public class TerminalActivity extends Activity
 				@Override
 				public boolean onMenuItemClick(MenuItem p1)
 				{
-					mSessionManager.closeCurrentSession();
+					sm.closeCurrentSession();
 					return true;
 				}
 			});
 		return super.onCreateOptionsMenu(menu);
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (item.getItemId() == android.R.id.home)
 		{
-			App.get().termstate = -1;
 			finish();
 		}
 		return super.onOptionsItemSelected(item);
@@ -120,51 +108,81 @@ public class TerminalActivity extends Activity
             getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
-	
-	private void close()
-	{
-		App.get().termstate += 1;
-		finish();
-	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		if (keyCode == KeyEvent.KEYCODE_BACK)
 		{
-			App.get().termstate = -1;
 			finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
-	protected void onPause()
+	protected void onStart()
 	{
-		super.onPause();
-		close();
-	}
-	
-	@Override
-	public void onSessionFinish(TermSession session)
-	{
-		if (mSessionManager.getCount() > 0)
-		{
-			finish();
-			overridePendingTransition(0, 0);
-			return;
-		}
-		App.get().termstate = -1;
-		finish();
+		super.onStart();
+		sm.init(this);
 	}
 
 	@Override
+	protected void onResume()
+	{
+		Log.d("TermActivity", "onReasume beg");
+		super.onResume();
+		tv.onResume();
+		Log.d("TermActivity", "onReasume end");
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		Log.d("TermActivity", "onPause");
+		tv.onPause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onStop()
+	{
+		sm.clearCb();
+		super.onStop();
+	}
+	
+	@Override
+	public void onSessionCreate(TermSession session)
+	{
+		getActionBar().setSelectedNavigationItem(sm.getCurrentPos());
+		createTerm(session);
+	}
+	
+	@Override
+	public boolean onSessionFinish()
+	{
+		Log.d("TermActivity", String.valueOf(sm.getCount()));
+		if (sm.getCount() == 0)
+		{
+			finish();
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void onSessionSelect(TermSession session)
+	{
+		getActionBar().setSelectedNavigationItem(sm.getCurrentPos());
+		createTerm(session);
+	}
+	
+	@Override
 	public boolean onNavigationItemSelected(int pos, long id)
 	{
-		if (pos == mSessionManager.getCurrentPos())
+		if (pos == sm.getCurrentPos())
 		{
 			new AlertDialog.Builder(this)
-				.setIcon(R.drawable.andlinux_solid)
+				.setIcon(R.drawable.andlinux_logo)
 				.setCancelable(true)
 				.setMessage(R.string.set_title);
 			
@@ -172,9 +190,7 @@ public class TerminalActivity extends Activity
 		}
 		else
 		{
-			mSessionManager.setCurrentPos(pos);
-			fragment = new TerminalFragment(mSessionManager.get(pos));
-			runOnUiThread(this);
+			sm.setCurrentPos(pos);
 		}
 		return true;
 	}

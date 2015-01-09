@@ -21,10 +21,23 @@
 
     <string name="app_name">AndLinux Installer</string>
 	<string name="installer">Installer</string>
-	<string name="info">&lt;img src="icon" /&gt;(AndLinux)is a mini GNU/Linux Environment for abnormal Linux User.&lt;br /&gt;
-		The &lt;b&gt;ROOT&lt;/b&gt; Permission is not in need in the android version of the application.&lt;br /&gt;
-		&lt;p&gt;Copyright © 2014-2015, MG.MaGeek&lt;small&gt;&amp;lt;MG.MaGeek@Gmail.com&amp;gt;&lt;/small&gt;.&lt;br /&gt;The software is licensed under GPLv3 license.&lt;/p&gt;
-		The Frameworks is licensed under CC BY-NC-SA 4.0 Int&amp;apos;l license.The Module Packages use their own License.</string>
+	<string name="info">
+&lt;small&gt;&lt;p&gt;
+		&lt;img src="icon" /&gt;(AndLinux) a mini GNU/Linux environment for Android.&lt;br /&gt;Copyright (c) 2014-1015&lt;br /&gt;&lt;small&gt;MG.MaGeek@Gmail.com&lt;br /&gt; (git: git@github.com:MG-MaGeek/AndLinux.git)&lt;/small&gt;
+&lt;/p&gt;&lt;p&gt;
+		This program is free software: you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation, either version 3 of the License, or
+		(at your option) any later version.
+&lt;/p&gt;&lt;p&gt;
+		This program is distributed in the hope that it will be useful,
+		but &lt;b&gt;WITHOUT ANY WARRANTY&lt;/b&gt;; without even the implied warranty of
+		&lt;b&gt;MERCHANTABILITY&lt;/b&gt; or &lt;b&gt;FITNESS FOR A PARTICULAR PURPOSE&lt;/b&gt;.  See the
+		GNU General Public License for more details.
+&lt;/p&gt;&lt;p&gt;
+		You should have received a copy of the GNU General Public License
+		along with this program.  If not, see &amp;lt;http://www.gnu.org/licenses&amp;gt;.
+&lt;/p&gt;&lt;/small&gt;</string>
 	<string name="exit">Quit</string>
 	<string name="open_wizard">Start Wizard</string>
 	<string name="install_package">Module Installer</string>
@@ -55,6 +68,8 @@
 	<!-- Terminal -->
 
 	<string name="terminal_activity">Terminal</string>
+	<string name="andlinux_service">AndLinux Service is runing...</string>
+	<string name="andlinux_service_info">AndLinux Terminal</string>
 	<string name="keyboard">KB</string>
 	<string name="set_title">Type the name of the Terminal Window.</string>
 	

@@ -4,10 +4,6 @@
 	
     <string name="app_name">AndLinux安装器</string>
 	<string name="installer">安装器</string>
-	<string name="info">&lt;img src="icon" /&gt;(AndLinux)是一个为使用非标准Linux或有特殊需求的用户提供的精简GNU/Linux系统环境。&lt;br /&gt;
-本软件的安卓版本无需&lt;b&gt;ROOT&lt;/b&gt;权限即可安装。&lt;br /&gt;
-		&lt;p&gt;Copyright © 2014-2015, MG.MaGeek&lt;small&gt;&amp;lt;MG.MaGeek@Gmail.com&amp;gt;&lt;/small&gt;.&lt;br /&gt;The software is licensed under GPLv3 license.&lt;/p&gt;
-		The Frameworks is licensed under CC BY-NC-SA 4.0 Int&amp;apos;l license.The Module Packages use their own License.</string>
 	<string name="exit">退出安装器</string>
 	<string name="open_wizard">打开向导</string>
 	<string name="install_package">安装模块</string>

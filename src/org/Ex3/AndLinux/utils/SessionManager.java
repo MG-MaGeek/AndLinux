@@ -16,20 +16,59 @@ public class SessionManager extends BaseAdapter
 	implements TermSession.FinishCallback, UpdateCallback
 {
 	private ArrayList<ShellTermSession> sessions = new ArrayList<ShellTermSession>();
-	private TermSession.FinishCallback cb;
+	private Callback cb;
 	private int count = 0;
-	private int currentPos = 0;
+	private int currentPos = -1;
 	
 	public ShellTermSession get(int pos)
 	{
 		return sessions.get(pos);
 	}
 	
-	public int create()
+	private void updatenum()
+	{
+		if (App.get().als == null)
+			return;
+		App.get().als.update(sessions.size());
+	}
+	
+	public class SessionNotFound extends Throwable
+	{
+		@Override
+		public String getMessage()
+		{
+			return "Session could not be found.";
+		}
+	}
+	
+	public ShellTermSession getCurrentSession() throws SessionNotFound
+	{
+		if (currentPos >= getCount())
+			throw new SessionNotFound();
+		return sessions.get(currentPos);
+	}
+	
+	public interface Callback
+	{
+		public boolean onSessionFinish();
+		
+		public void onSessionCreate(TermSession session);
+		
+		public void onSessionSelect(TermSession session)
+	}
+	
+	public void init(Callback cb)
+	{
+		this.cb = cb;
+		if (sessions.isEmpty())
+			create();
+	}
+	
+	public void create()
 	{
 		try
 		{
-			String cmd = "export ALIF=/data/data/org.Ex3.AndLinux/files\nexport TEMP=$ALIF/tmp\nexec $ALIF/utils/proot -r $ALIF/linuxroot -f $ALIF/bindings /init";
+			String cmd = "export ALIF=/data/data/org.Ex3.AndLinux/files;exec $ALIF/start";
 			ShellTermSession session =
 				new ShellTermSession(new TermSettings(App.get().getResources(),
 				PreferenceManager.getDefaultSharedPreferences(App.get())), cmd);
@@ -39,26 +78,24 @@ public class SessionManager extends BaseAdapter
 			session.setTitle("Window #" + ++count);
 			session.setTitleChangedListener(this);
 			sessions.add(session);
+			updatenum();
 			currentPos = sessions.size() - 1;
 			notifyDataSetChanged();
+			
+			if (cb != null) cb.onSessionCreate(session);
 		}
 		catch (Throwable e)
 		{
 			e.printStackTrace();
 			System.exit(1);
 		}
-		return currentPos;
 	}
 	
 	public void closeCurrentSession()
 	{
-		sessions.get(currentPos).finish();
-	}
-	
-	public void setCb(TermSession.FinishCallback cb)
-	{
-		this.cb = cb;
-		return;
+		if (currentPos < getCount())
+			sessions.get(currentPos).finish();
+		notifyDataSetChanged();
 	}
 	
 	public void clearCb()
@@ -74,13 +111,14 @@ public class SessionManager extends BaseAdapter
 			currentPos--;
 		}
 		sessions.remove(session);
+		updatenum();
 		if (currentPos == sessions.size())
 			currentPos--;
 		notifyDataSetChanged();
 		if (cb != null)
 		{
-			cb.onSessionFinish(session);
-			clearCb();
+			if (!cb.onSessionFinish() && currentPos != -1)
+				cb.onSessionSelect(get(currentPos));
 		}
 	}
 	
@@ -100,10 +138,10 @@ public class SessionManager extends BaseAdapter
 	public View getView(int id, View view, ViewGroup vg)
 	{
 		Log.d("SessionManager", "inflate start");
-		Activity act = (Activity) vg.getContext();
+		LayoutInflater inflater = LayoutInflater.from(vg.getContext());
 		//TextView text = (TextView)ViewGroup.inflate(App.get(), android.R.layout.simple_expandable_list_item_1, vg);
 		//TextView text = (TextView) mInflater.inflate(, vg, false);
-		TextView text = (TextView) act.getLayoutInflater().inflate(android.R.layout.simple_dropdown_item_1line, vg, false);
+		TextView text = (TextView) inflater.inflate(android.R.layout.simple_dropdown_item_1line, vg, false);
 		text.setText(sessions.get(id).getTitle());
 		Log.d("SessionManager", "inflate finish");
 		return text;
@@ -123,6 +161,7 @@ public class SessionManager extends BaseAdapter
 	public void setCurrentPos(int pos)
 	{
 		currentPos = pos;
+		if (cb != null) cb.onSessionSelect(get(currentPos));
 	}
 	
 	@Override

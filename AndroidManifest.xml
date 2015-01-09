@@ -3,8 +3,8 @@
     package="org.Ex3.AndLinux"
 	android:sharedUserId="org.Ex3.Process"
 	android:sharedUserLabel="@string/processlabel"
-	android:versionName="preview 7"
-	android:versionCode="7"
+	android:versionName="preview 8"
+	android:versionCode="8"
 	android:installLocation="internalOnly">
 	
 	<uses-sdk android:minSdkVersion="14"
@@ -22,11 +22,10 @@
     <application
 		android:name=".App"
         android:allowBackup="true"
-        android:logo="@drawable/andlinux_solid"
+        android:logo="@drawable/andlinux_logo"
 		android:icon="@drawable/andlinux_logo"
         android:label="@string/app_name"
-		android:hardwareAccelerated="true"
-        android:theme="@style/AppTheme" >
+		android:hardwareAccelerated="true">
 		
         <activity
             android:name=".MainActivity"
@@ -58,8 +57,17 @@
 			android:launchMode="singleInstance"
 			android:uiOptions="splitActionBarWhenNarrow"
 			android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-			android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
-			android:noHistory="true"/>
+			android:windowSoftInputMode="adjustResize"/>
+		
+		<service
+			android:name=".AndLinuxSevice">
+		</service>
+		
+		<provider
+			android:name=".FilesContentProvider"
+			android:authorities="AndLinux"
+			android:permission="org.Ex3.AndLinux.permission.module"
+			/>
 		
     </application>
 

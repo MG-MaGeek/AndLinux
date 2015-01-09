@@ -43,7 +43,7 @@ public class RootfsInstaller extends WizardFragment
 				public void onClick(View p1)
 				{
 					ProgressDialog pd = new ProgressDialog(getActivity());
-					pd.setIcon(R.drawable.andlinux_solid);
+					pd.setIcon(R.drawable.andlinux_logo);
 					pd.setTitle(R.string.installing);
 					pd.setIndeterminate(false);
 					App.get().setProgressDialog(pd);
